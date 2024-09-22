@@ -1,8 +1,9 @@
+import clsx from 'clsx'
 import './Button.css'
 
 export default function Button({ className, children, onClick }) {
 	return (
-		<button className={'btn' + (className ? ` ${className}` : '')} onClick={onClick}>
+		<button className={clsx('btn', className)} onClick={onClick}>
 			{children}
 		</button>
 	)

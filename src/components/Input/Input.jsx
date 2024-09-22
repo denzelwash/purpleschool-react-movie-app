@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import './Input.css'
 
 export default function Input({ type = 'text', className, placeholder = '', icon }) {
@@ -8,5 +9,5 @@ export default function Input({ type = 'text', className, placeholder = '', icon
 		  }
 		: {}
 
-	return <input type={type} className={'input' + (className ? ` ${className}` : '')} placeholder={placeholder} style={style} />
+	return <input type={type} className={clsx('input', className)} placeholder={placeholder} style={style} />
 }
