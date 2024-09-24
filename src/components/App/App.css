@@ -1,0 +1,14 @@
+.page-title {
+	margin-bottom: 16px;
+}
+
+.text {
+	margin-bottom: 16px;
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 80px;
+}
