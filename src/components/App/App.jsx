@@ -6,8 +6,8 @@ import Input from '../Input/Input'
 import CardsGrid from '../CardsGrid/CardsGrid'
 import CardItem from '../CardItem/CardItem'
 import { useState } from 'react'
-import '../../assets/css/main.css'
-import './App.css'
+import '../../assets/scss/main.scss'
+import style from './App.module.scss'
 
 const MOCK_CARDS = [
 	{
@@ -89,7 +89,7 @@ function App() {
 				<div className="container">
 					<PageTitle>Поиск</PageTitle>
 					<Text>Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.</Text>
-					<div className="search">
+					<div className={style.search}>
 						<Input placeholder="Введите название" icon="/img/icons/search.svg" />
 						<Button className="primary" onClick={() => console.log('search')}>
 							Искать

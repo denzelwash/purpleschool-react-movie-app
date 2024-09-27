@@ -10,8 +10,7 @@
 	background-repeat: no-repeat;
 	background-position: 16px center;
 	background-size: 24px;
-}
-
-.input::placeholder {
-	color: #475069;
+	&::placeholder {
+		color: #475069;
+	}
 }
