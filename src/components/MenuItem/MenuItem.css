@@ -1,0 +1,27 @@
+.menu-item {
+	letter-spacing: 0.2;
+	color: #a8aebf;
+	font-weight: 600;
+	transition: all 0.3s;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.menu-item:hover {
+	letter-spacing: 0.2;
+	color: #fff;
+	font-weight: 600;
+}
+
+.menu-item__count {
+	width: 24px;
+	height: 24px;
+	background-color: #7b6ef6;
+	color: #fff;
+	font-size: 14px;
+	line-height: 24px;
+	text-align: center;
+	border-radius: 50%;
+}
