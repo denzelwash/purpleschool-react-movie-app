@@ -5,13 +5,15 @@ import Button from '../Button/Button'
 import Input from '../Input/Input'
 import CardsGrid from '../CardsGrid/CardsGrid'
 import CardItem from '../CardItem/CardItem'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import '../../assets/scss/main.scss'
 import style from './App.module.scss'
 import { MOCK_CARDS } from '../../mocks/cards'
 
 function App() {
 	const [cards, setCards] = useState(MOCK_CARDS)
+	const [search, setSearch] = useState('')
+	const searchInputRef = useRef(null)
 
 	const handleToggleFavorite = (id) => {
 		setCards([
@@ -24,6 +26,12 @@ function App() {
 		])
 	}
 
+	const handleSearch = () => {
+		if (!search) {
+			searchInputRef.current.focus()
+		}
+	}
+
 	return (
 		<>
 			<Header />
@@ -32,8 +40,14 @@ function App() {
 					<PageTitle>Поиск</PageTitle>
 					<Text>Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.</Text>
 					<div className={style.search}>
-						<Input placeholder="Введите название" icon="/img/icons/search.svg" />
-						<Button className="primary" onClick={() => console.log('search')}>
+						<Input
+							ref={searchInputRef}
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							placeholder="Введите название"
+							icon="/img/icons/search.svg"
+						/>
+						<Button className="primary" onClick={handleSearch}>
 							Искать
 						</Button>
 					</div>
