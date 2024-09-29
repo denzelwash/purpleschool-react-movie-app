@@ -4,3 +4,10 @@
 	gap: 8px;
 	margin-bottom: 80px;
 }
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 26px;
+}

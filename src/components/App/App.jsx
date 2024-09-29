@@ -15,6 +15,21 @@ function App() {
 	const [search, setSearch] = useState('')
 	const searchInputRef = useRef(null)
 
+	const handleSearch = () => {
+		if (!search) {
+			searchInputRef.current.focus()
+		}
+	}
+
+	const [login, setLogin] = useState('')
+	const loginInputRef = useRef(null)
+
+	const handleLogin = () => {
+		if (!login) {
+			loginInputRef.current.focus()
+		}
+	}
+
 	const handleToggleFavorite = (id) => {
 		setCards([
 			...cards.map((card) => {
@@ -24,12 +39,6 @@ function App() {
 				return card
 			})
 		])
-	}
-
-	const handleSearch = () => {
-		if (!search) {
-			searchInputRef.current.focus()
-		}
 	}
 
 	return (
@@ -63,6 +72,17 @@ function App() {
 							></CardItem>
 						))}
 					</CardsGrid>
+				</div>
+			</div>
+			<div className="page-default">
+				<div className="container">
+					<PageTitle>Вход</PageTitle>
+					<div className={style['login-form']}>
+						<Input ref={loginInputRef} value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Ваше имя" />
+						<Button className="primary" onClick={handleLogin}>
+							Войти в профиль
+						</Button>
+					</div>
 				</div>
 			</div>
 		</>
