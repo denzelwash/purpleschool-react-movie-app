@@ -1,3 +1,6 @@
+import { useRef, useState, useContext } from 'react'
+import { MOCK_CARDS } from '../../mocks/cards'
+import { UserContext } from '../../context/user'
 import Header from '../Header/Header'
 import PageTitle from '../PageTitle/PageTitle'
 import Text from '../Text/Text'
@@ -5,20 +8,16 @@ import Button from '../Button/Button'
 import Input from '../Input/Input'
 import CardsGrid from '../CardsGrid/CardsGrid'
 import CardItem from '../CardItem/CardItem'
-import { useRef, useState } from 'react'
 import '../../assets/scss/main.scss'
 import style from './App.module.scss'
-import { MOCK_CARDS } from '../../mocks/cards'
-import useLocalStorage from '../../hooks/useLocalStorage'
 
 function App() {
-	const [localStorage, updateLocalStorage] = useLocalStorage('users')
+	const { activeUser, login } = useContext(UserContext)
 	const [cards, setCards] = useState(MOCK_CARDS)
 	const [searchInput, setSearchInput] = useState('')
 	const searchInputRef = useRef(null)
 	const [loginInput, setLoginInput] = useState('')
 	const loginInputRef = useRef(null)
-	const [activeUser, setActiveUser] = useState(null)
 
 	const handleSearch = () => {
 		if (!searchInput) {
@@ -31,23 +30,8 @@ function App() {
 			loginInputRef.current.focus()
 			return
 		}
-		if (Array.isArray(localStorage)) {
-			const existingUser = localStorage.find((user) => user.name === loginInput)
-			if (existingUser) {
-				updateLocalStorage([...localStorage.map((user) => (user.name === loginInput ? { ...user, isLogined: true } : user))])
-			} else {
-				updateLocalStorage([...localStorage, { name: loginInput, isLogined: true }])
-			}
-		} else {
-			updateLocalStorage([{ name: loginInput, isLogined: true }])
-		}
-		setActiveUser(loginInput)
+		login(loginInput)
 		setLoginInput('')
-	}
-
-	const handleLogout = () => {
-		updateLocalStorage([...localStorage.map((user) => (user.name === activeUser ? { ...user, isLogined: false } : user))])
-		setActiveUser(null)
 	}
 
 	const handleToggleFavorite = (id) => {
@@ -63,7 +47,7 @@ function App() {
 
 	return (
 		<>
-			<Header user={activeUser} logout={handleLogout} />
+			<Header />
 			<div className="page-default">
 				<div className="container">
 					<PageTitle>Поиск</PageTitle>
