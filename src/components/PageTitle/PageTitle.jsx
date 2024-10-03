@@ -1,5 +1,5 @@
-import './PageTitle.css'
+import style from './PageTitle.module.scss'
 
 export default function PageTitle({ children }) {
-	return <h1 className="page-title">{children}</h1>
+	return <h1 className={style['page-title']}>{children}</h1>
 }

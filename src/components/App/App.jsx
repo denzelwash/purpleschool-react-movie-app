@@ -1,3 +1,6 @@
+import { useRef, useState, useContext } from 'react'
+import { MOCK_CARDS } from '../../mocks/cards'
+import { UserContext } from '../../context/user'
 import Header from '../Header/Header'
 import PageTitle from '../PageTitle/PageTitle'
 import Text from '../Text/Text'
@@ -5,13 +8,31 @@ import Button from '../Button/Button'
 import Input from '../Input/Input'
 import CardsGrid from '../CardsGrid/CardsGrid'
 import CardItem from '../CardItem/CardItem'
-import { useState } from 'react'
-import { MOCK_CARDS } from '../../mocks/cards'
-import '../../assets/css/main.css'
-import './App.css'
+import '../../assets/scss/main.scss'
+import style from './App.module.scss'
 
 function App() {
+	const { activeUser, login } = useContext(UserContext)
 	const [cards, setCards] = useState(MOCK_CARDS)
+	const [searchInput, setSearchInput] = useState('')
+	const searchInputRef = useRef(null)
+	const [loginInput, setLoginInput] = useState('')
+	const loginInputRef = useRef(null)
+
+	const handleSearch = () => {
+		if (!searchInput) {
+			searchInputRef.current.focus()
+		}
+	}
+
+	const handleLogin = () => {
+		if (!loginInput) {
+			loginInputRef.current.focus()
+			return
+		}
+		login(loginInput)
+		setLoginInput('')
+	}
 
 	const handleToggleFavorite = (id) => {
 		setCards([
@@ -31,9 +52,15 @@ function App() {
 				<div className="container">
 					<PageTitle>Поиск</PageTitle>
 					<Text>Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.</Text>
-					<div className="search">
-						<Input placeholder="Введите название" icon="/img/icons/search.svg" />
-						<Button className="primary" onClick={() => console.log('search')}>
+					<div className={style.search}>
+						<Input
+							ref={searchInputRef}
+							value={searchInput}
+							onChange={(e) => setSearchInput(e.target.value)}
+							placeholder="Введите название"
+							icon="/img/icons/search.svg"
+						/>
+						<Button className="primary" onClick={handleSearch}>
 							Искать
 						</Button>
 					</div>
@@ -51,6 +78,19 @@ function App() {
 					</CardsGrid>
 				</div>
 			</div>
+			{!activeUser && (
+				<div className="page-default">
+					<div className="container">
+						<PageTitle>Вход</PageTitle>
+						<div className={style['login-form']}>
+							<Input ref={loginInputRef} value={loginInput} onChange={(e) => setLoginInput(e.target.value)} placeholder="Ваше имя" />
+							<Button className="primary" onClick={handleLogin}>
+								Войти в профиль
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
 		</>
 	)
 }

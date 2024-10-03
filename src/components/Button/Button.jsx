@@ -1,10 +1,13 @@
 import clsx from 'clsx'
-import './Button.css'
+import style from './Button.module.scss'
+import { forwardRef } from 'react'
 
-export default function Button({ className, children, onClick }) {
+function Button({ className, children, onClick }, ref) {
 	return (
-		<button className={clsx('btn', className)} onClick={onClick}>
+		<button ref={ref} className={clsx(style.btn, style[className])} onClick={onClick}>
 			{children}
 		</button>
 	)
 }
+
+export default forwardRef(Button)
