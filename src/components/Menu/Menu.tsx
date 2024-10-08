@@ -9,17 +9,21 @@ export default function Menu() {
 
 	return (
 		<nav className={style.menu}>
-			<MenuItem text="Поиск фильмов" to="#" />
-			<MenuItem text="Мои фильмы" to="#">
+			<MenuItem to="#">Поиск фильмов</MenuItem>
+			<MenuItem to="#">
+				<span>Мои фильмы</span>
 				<div className={styleMenuItem['menu-item__count']}>2</div>
 			</MenuItem>
 			{activeUser ? (
 				<>
-					<MenuItem text={activeUser} to="#"></MenuItem>
-					<MenuItem text="Выйти" to="#" onClick={logout}></MenuItem>
+					<MenuItem to="#">{activeUser}</MenuItem>
+					<MenuItem to="#" onClick={logout}>
+						Выйти
+					</MenuItem>
 				</>
 			) : (
-				<MenuItem text="Войти" to="#">
+				<MenuItem to="#">
+					<span>Войти</span>
 					<img src="/img/icons/login.svg" alt="Войти" />
 				</MenuItem>
 			)}
