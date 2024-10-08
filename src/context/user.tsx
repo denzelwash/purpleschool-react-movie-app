@@ -1,11 +1,27 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
+import { User } from '../types/user'
 
-export const UserContext = createContext()
+interface UserContextProviderProps {
+	children: ReactNode
+}
 
-export default function UserContextProvider({ children }) {
-	const [activeUser, setActiveUser] = useState(null)
-	const [localStorage, updateLocalStorage] = useLocalStorage('users')
+interface IUserContext {
+	activeUser: string | null
+	// Линтер ругается на неиспользуемые переменные в интерфейсе (userName)
+	// 'no-unused-vars': 'off',
+	// '@typescript-eslint/no-unused-vars': ['error']
+	// с этими строками в eslint.config.js ошибка пропадает, но я не уверен что это правильно. Перенести это в конфиг или оставить коммент только для следующей строки?
+	// eslint-disable-next-line no-unused-vars
+	login: (userName: string) => void
+	logout: () => void
+}
+
+export const UserContext = createContext<IUserContext>({} as IUserContext)
+
+export default function UserContextProvider({ children }: UserContextProviderProps) {
+	const [activeUser, setActiveUser] = useState<string | null>(null)
+	const [localStorage, updateLocalStorage] = useLocalStorage<User[]>('users')
 
 	useEffect(() => {
 		if (Array.isArray(localStorage)) {
@@ -18,7 +34,7 @@ export default function UserContextProvider({ children }) {
 		}
 	}, [localStorage])
 
-	const login = (userName) => {
+	const login = (userName: string) => {
 		if (Array.isArray(localStorage)) {
 			const existingUser = localStorage.find((user) => user.name === userName)
 			if (existingUser) {
@@ -32,7 +48,9 @@ export default function UserContextProvider({ children }) {
 	}
 
 	const logout = () => {
-		updateLocalStorage([...localStorage.map((user) => (user.name === activeUser ? { ...user, isLogined: false } : user))])
+		if (Array.isArray(localStorage)) {
+			updateLocalStorage([...localStorage.map((user) => (user.name === activeUser ? { ...user, isLogined: false } : user))])
+		}
 	}
 
 	return <UserContext.Provider value={{ activeUser, login, logout }}>{children}</UserContext.Provider>

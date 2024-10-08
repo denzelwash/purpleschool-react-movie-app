@@ -15,18 +15,18 @@ function App() {
 	const { activeUser, login } = useContext(UserContext)
 	const [cards, setCards] = useState(MOCK_CARDS)
 	const [searchInput, setSearchInput] = useState('')
-	const searchInputRef = useRef(null)
+	const searchInputRef = useRef<HTMLInputElement>(null)
 	const [loginInput, setLoginInput] = useState('')
-	const loginInputRef = useRef(null)
+	const loginInputRef = useRef<HTMLInputElement>(null)
 
 	const handleSearch = () => {
-		if (!searchInput) {
+		if (!searchInput && searchInputRef.current) {
 			searchInputRef.current.focus()
 		}
 	}
 
 	const handleLogin = () => {
-		if (!loginInput) {
+		if (!loginInput && loginInputRef.current) {
 			loginInputRef.current.focus()
 			return
 		}
@@ -34,7 +34,7 @@ function App() {
 		setLoginInput('')
 	}
 
-	const handleToggleFavorite = (id) => {
+	const handleToggleFavorite = (id: number) => {
 		setCards([
 			...cards.map((card) => {
 				if (card.id === id) {

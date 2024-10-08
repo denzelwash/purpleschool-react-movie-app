@@ -1,7 +1,15 @@
 import clsx from 'clsx'
 import style from './CardItem.module.scss'
 
-export default function CardItem({ title, poster, count, isFavorite, toggleFavorite }) {
+interface CardItemProps {
+	title: string
+	poster: string
+	count: number
+	isFavorite: boolean
+	toggleFavorite: () => void
+}
+
+export default function CardItem({ title, poster, count, isFavorite, toggleFavorite }: CardItemProps) {
 	return (
 		<div className={style['card-item']}>
 			<div className={style['card-item__count']}>
