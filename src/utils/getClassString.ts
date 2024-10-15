@@ -1,4 +1,9 @@
-export default function getClassString(className, styleModule) {
+export default function getClassString(
+	className: string,
+	styleModule: {
+		readonly [key: string]: string
+	}
+) {
 	if (!className) {
 		return ''
 	}

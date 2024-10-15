@@ -1,4 +1,6 @@
-export const MOCK_CARDS = [
+import { Card } from '../types/card'
+
+export const MOCK_CARDS: Card[] = [
 	{
 		id: 1,
 		title: 'Black Widow',
