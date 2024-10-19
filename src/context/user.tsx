@@ -8,10 +8,6 @@ interface UserContextProviderProps {
 
 interface IUserContext {
 	activeUser: string | null
-	// Линтер ругается на неиспользуемые переменные в интерфейсе (userName)
-	// 'no-unused-vars': 'off',
-	// '@typescript-eslint/no-unused-vars': ['error']
-	// с этими строками в eslint.config.js ошибка пропадает, но я не уверен что это правильно. Перенести это в конфиг или оставить коммент только для следующей строки?
 	// eslint-disable-next-line no-unused-vars
 	login: (userName: string) => void
 	logout: () => void
