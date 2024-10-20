@@ -22,13 +22,16 @@
 		border-radius: 10px;
 		overflow: hidden;
 		width: 100%;
-		max-height: 400px;
+		height: 400px;
+		object-fit: cover;
+		object-position: center;
 	}
 	&__text {
 		margin-top: auto;
 		padding: 24px 8px;
 		display: grid;
 		justify-content: start;
+		flex-grow: 1;
 	}
 	&__title {
 		display: inline-block;
@@ -38,6 +41,9 @@
 		text-align: left;
 		text-decoration: none;
 		color: #fff;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 	&__favorites {
 		border: none;
