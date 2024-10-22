@@ -4,7 +4,7 @@ import Default from './layouts/Default/Default'
 import Main from './pages/Main/Main'
 import Login from './pages/Login/Login'
 import Favorites from './pages/Favorites/Favorites'
-import Film from './pages/Film/Film'
+import Film, { filmLoader } from './pages/Film/Film'
 import Error from './pages/Error/Error'
 
 const router = createBrowserRouter([
@@ -26,7 +26,9 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ROUTE_PATH.Film,
-				element: <Film />
+				element: <Film />,
+				errorElement: <Error />,
+				loader: filmLoader
 			},
 			{
 				path: ROUTE_PATH.Error,

@@ -18,3 +18,9 @@ export interface Film {
 	photo_height?: number
 	isFavorite: boolean
 }
+
+export interface FilmFull {
+	short: {
+		name: string
+	}
+}
