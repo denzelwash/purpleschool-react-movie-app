@@ -7,7 +7,7 @@ export const ROUTE_PATH = {
 	Error: '*'
 } as const
 
-export enum RequestStatus {
+export enum REQUEST_STATUS {
 	Idle = 'Idle',
 	Loading = 'Loading',
 	Success = 'Success',

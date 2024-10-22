@@ -9,11 +9,11 @@ import style from './Main.module.scss'
 import { Film, FilmsResponse } from '../../types/film'
 import api from '../../services/api'
 import Loader from '../../components/Loader/Loader'
-import { RequestStatus } from '../../const'
+import { REQUEST_STATUS } from '../../const'
 
 export default function Main() {
 	const [films, setFilms] = useState<Film[]>([])
-	const [status, setStatus] = useState<RequestStatus>(RequestStatus.Idle)
+	const [status, setStatus] = useState<REQUEST_STATUS>(REQUEST_STATUS.Idle)
 
 	const [searchInput, setSearchInput] = useState('')
 	const searchInputRef = useRef<HTMLInputElement>(null)
@@ -29,13 +29,13 @@ export default function Main() {
 
 	async function getFilms() {
 		try {
-			setStatus(RequestStatus.Loading)
+			setStatus(REQUEST_STATUS.Loading)
 			const { data } = await api.get<FilmsResponse>(`/?q=${searchInput}`)
 			setFilms(data.description)
-			setStatus(RequestStatus.Success)
+			setStatus(REQUEST_STATUS.Success)
 		} catch (e) {
 			console.log(e)
-			setStatus(RequestStatus.Failed)
+			setStatus(REQUEST_STATUS.Failed)
 		}
 	}
 
@@ -68,16 +68,16 @@ export default function Main() {
 							Искать
 						</Button>
 					</div>
-					{status === RequestStatus.Success && films.length > 0 && (
+					{status === REQUEST_STATUS.Success && films.length > 0 && (
 						<CardsGrid>
 							{films.map((film) => (
 								<CardItem {...film} key={film['#IMDB_ID']} toggleFavorite={() => handleToggleFavorite(film['#IMDB_ID'])}></CardItem>
 							))}
 						</CardsGrid>
 					)}
-					{status === RequestStatus.Success && films.length === 0 && <>Ничего не найдено!</>}
+					{status === REQUEST_STATUS.Success && films.length === 0 && <>Ничего не найдено!</>}
 				</div>
-				{status === RequestStatus.Loading && <Loader />}
+				{status === REQUEST_STATUS.Loading && <Loader />}
 			</div>
 		</>
 	)
