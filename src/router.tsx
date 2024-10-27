@@ -6,6 +6,7 @@ import Login from './pages/Login/Login'
 import Favorites from './pages/Favorites/Favorites'
 import Film, { filmLoader } from './pages/Film/Film'
 import Error from './pages/Error/Error'
+import Private from './layouts/Private/Private'
 
 const router = createBrowserRouter([
 	{
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <Main />
+				element: (
+					<Private>
+						<Main />
+					</Private>
+				)
 			},
 			{
 				path: ROUTE_PATH.Login,
@@ -22,11 +27,19 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ROUTE_PATH.Favorites,
-				element: <Favorites />
+				element: (
+					<Private>
+						<Favorites />
+					</Private>
+				)
 			},
 			{
 				path: ROUTE_PATH.Film,
-				element: <Film />,
+				element: (
+					<Private>
+						<Film />
+					</Private>
+				),
 				errorElement: <Error />,
 				loader: filmLoader
 			},
