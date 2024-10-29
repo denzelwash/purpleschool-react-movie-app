@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 
 export default function useLocalStorage<T>(key: string) {
 	const [data, setData] = useState<T | null>(null)
-	// Здесь можно явно не присваивать null, запись ниже тоже работает. Как лучше делать?
-	// const [data, setData] = useState<T>()
 
 	useEffect(() => {
 		const localStorageString = localStorage.getItem(key)

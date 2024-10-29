@@ -5,11 +5,16 @@ import CardsGrid from '../../components/CardsGrid/CardsGrid'
 import Input from '../../components/Input/Input'
 import Text from '../../components/Text/Text'
 import PageTitle from '../../components/PageTitle/PageTitle'
-import { MOCK_CARDS } from '../../mocks/cards'
 import style from './Main.module.scss'
+import { Film, FilmsResponse } from '../../types/film'
+import api from '../../services/api'
+import Loader from '../../components/Loader/Loader'
+import { REQUEST_STATUS } from '../../const'
 
 export default function Main() {
-	const [cards, setCards] = useState(MOCK_CARDS)
+	const [films, setFilms] = useState<Film[]>([])
+	const [status, setStatus] = useState<REQUEST_STATUS>(REQUEST_STATUS.Idle)
+
 	const [searchInput, setSearchInput] = useState('')
 	const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -17,15 +22,30 @@ export default function Main() {
 		if (!searchInput && searchInputRef.current) {
 			searchInputRef.current.focus()
 		}
+		if (searchInput.length) {
+			getFilms()
+		}
 	}
 
-	const handleToggleFavorite = (id: number) => {
-		setCards([
-			...cards.map((card) => {
-				if (card.id === id) {
-					card.isFavorite = !card.isFavorite
+	async function getFilms() {
+		try {
+			setStatus(REQUEST_STATUS.Loading)
+			const { data } = await api.get<FilmsResponse>(`/?q=${searchInput}`)
+			setFilms(data.description)
+			setStatus(REQUEST_STATUS.Success)
+		} catch (e) {
+			console.log(e)
+			setStatus(REQUEST_STATUS.Failed)
+		}
+	}
+
+	const handleToggleFavorite = (id: string) => {
+		setFilms([
+			...films.map((film) => {
+				if (film['#IMDB_ID'] === id) {
+					film.isFavorite = !film.isFavorite
 				}
-				return card
+				return film
 			})
 		])
 	}
@@ -48,12 +68,16 @@ export default function Main() {
 							Искать
 						</Button>
 					</div>
-					<CardsGrid>
-						{cards.map((card) => (
-							<CardItem {...card} key={card.id} toggleFavorite={() => handleToggleFavorite(card.id)}></CardItem>
-						))}
-					</CardsGrid>
+					{status === REQUEST_STATUS.Success && films.length > 0 && (
+						<CardsGrid>
+							{films.map((film) => (
+								<CardItem {...film} key={film['#IMDB_ID']} toggleFavorite={() => handleToggleFavorite(film['#IMDB_ID'])}></CardItem>
+							))}
+						</CardsGrid>
+					)}
+					{status === REQUEST_STATUS.Success && films.length === 0 && <>Ничего не найдено!</>}
 				</div>
+				{status === REQUEST_STATUS.Loading && <Loader />}
 			</div>
 		</>
 	)
