@@ -6,6 +6,7 @@ import { Film } from '../../types/film'
 
 interface CardItemProps extends Film {
 	toggleFavorite: () => void
+	isFavorite: boolean
 }
 
 export default function CardItem(props: CardItemProps) {

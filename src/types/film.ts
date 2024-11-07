@@ -16,7 +16,6 @@ export interface Film {
 	'#IMG_POSTER'?: string
 	photo_width?: number
 	photo_height?: number
-	isFavorite: boolean
 }
 
 export interface FilmFull {
