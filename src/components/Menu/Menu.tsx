@@ -1,15 +1,20 @@
 import style from './Menu.module.scss'
 import styleMenuItem from '../MenuItem/MenuItem.module.scss'
 import MenuItem from '../MenuItem/MenuItem'
-import { useContext } from 'react'
-import { UserContext } from '../../context/user'
 import { ROUTE_PATH } from '../../const'
-import { useAppSelector } from '../../store/store'
-import favoritesSlice from '../../store/slices/favorites'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import favoritesSlice, { clearFavorites } from '../../store/slices/favorites'
+import userSlice, { setUser } from '../../store/slices/user'
 
 export default function Menu() {
 	const favoriteFilms = useAppSelector(favoritesSlice.selectors.films)
-	const { activeUser, logout } = useContext(UserContext)
+	const dispatch = useAppDispatch()
+	const userName = useAppSelector(userSlice.selectors.userName)
+
+	const handleLogout = () => {
+		dispatch(setUser(null))
+		dispatch(clearFavorites())
+	}
 
 	return (
 		<nav className={style.menu}>
@@ -18,10 +23,10 @@ export default function Menu() {
 				<span>Мои фильмы</span>
 				<div className={styleMenuItem['menu-item__count']}>{favoriteFilms.length}</div>
 			</MenuItem>
-			{activeUser ? (
+			{userName ? (
 				<>
-					<MenuItem>{activeUser}</MenuItem>
-					<MenuItem onClick={logout}>Выйти</MenuItem>
+					<MenuItem>{userName}</MenuItem>
+					<MenuItem onClick={handleLogout}>Выйти</MenuItem>
 				</>
 			) : (
 				<MenuItem to={ROUTE_PATH.Login}>

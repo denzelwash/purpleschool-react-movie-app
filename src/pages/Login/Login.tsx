@@ -1,30 +1,32 @@
-import { useContext, useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import PageTitle from '../../components/PageTitle/PageTitle'
-import { UserContext } from '../../context/user'
 import style from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../const'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import userSlice, { setUser } from '../../store/slices/user'
 
 export default function Login() {
-	const { activeUser, login } = useContext(UserContext)
 	const [loginInput, setLoginInput] = useState('')
 	const loginInputRef = useRef<HTMLInputElement>(null)
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const userName = useAppSelector(userSlice.selectors.userName)
 
 	useEffect(() => {
-		if (activeUser) {
+		if (userName) {
 			navigate(ROUTE_PATH.Main)
 		}
-	}, [activeUser, navigate])
+	}, [userName, navigate])
 
 	const handleLogin = () => {
 		if (!loginInput && loginInputRef.current) {
 			loginInputRef.current.focus()
 			return
 		}
-		login(loginInput)
+		dispatch(setUser(loginInput))
 		setLoginInput('')
 	}
 
