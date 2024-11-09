@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../const'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import userSlice, { setUser } from '../../store/slices/user'
+import { User } from '../../types/user'
+import loadState from '../../utils/loadState'
+import { setFavorites } from '../../store/slices/favorites'
 
 export default function Login() {
 	const [loginInput, setLoginInput] = useState('')
@@ -26,7 +29,12 @@ export default function Login() {
 			loginInputRef.current.focus()
 			return
 		}
+		const localStorageUsers = loadState<User[]>('users')
+		const user = localStorageUsers?.find((u) => u.name === loginInput)
 		dispatch(setUser(loginInput))
+		if (user?.favorites) {
+			dispatch(setFavorites(user.favorites))
+		}
 		setLoginInput('')
 	}
 

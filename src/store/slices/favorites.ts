@@ -21,6 +21,9 @@ export const favoritesSlice = createSlice({
 				state.films.push(action.payload)
 			}
 		},
+		setFavorites: (state, action: PayloadAction<Film[]>) => {
+			state.films = action.payload
+		},
 		clearFavorites: (state) => {
 			state.films = []
 		}
@@ -30,5 +33,5 @@ export const favoritesSlice = createSlice({
 	}
 })
 
-export const { toggleFilm, clearFavorites } = favoritesSlice.actions
+export const { toggleFilm, setFavorites, clearFavorites } = favoritesSlice.actions
 export default favoritesSlice
