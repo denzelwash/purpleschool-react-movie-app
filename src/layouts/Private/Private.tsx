@@ -12,7 +12,7 @@ export default function Private({ children }: PrivateProps) {
 	const userName = useAppSelector(userSlice.selectors.userName)
 
 	if (!userName) {
-		return <Navigate to={`/${ROUTE_PATH.Login}`} replace />
+		return <Navigate to={`${ROUTE_PATH.Login}`} replace />
 	}
 
 	return children
