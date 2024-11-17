@@ -25,7 +25,10 @@ export default function Menu() {
 			</MenuItem>
 			{userName ? (
 				<>
-					<MenuItem>{userName}</MenuItem>
+					<MenuItem>
+						<span>{userName}</span>
+						<img src={'/img/icons/user.svg'} width={24} height={24} />
+					</MenuItem>
 					<MenuItem onClick={handleLogout}>Выйти</MenuItem>
 				</>
 			) : (
