@@ -31,10 +31,12 @@ export function Film(props: FilmFull) {
 						<p>{props.short.description}</p>
 					</div>
 					<div className={style['film__info-rating-grid']}>
-						<div className={style['film__rating']}>
-							<img src="/img/icons/star.svg" width={16} height={16} alt="" />
-							<span>{String(props.short.aggregateRating.ratingValue)}</span>
-						</div>
+						{props.short.aggregateRating?.ratingValue && (
+							<div className={style['film__rating']}>
+								<img src="/img/icons/star.svg" width={16} height={16} alt="" />
+								<span>{String(props.short.aggregateRating.ratingValue)}</span>
+							</div>
+						)}
 						<button className={clsx(style['film__favorite-btn'], isFavorite && style['active'])}>
 							<img src={`/img/icons/${isFavorite ? 'bookmark' : 'like'}.svg`} alt="" width={24} height={24} />
 							<span>В {isFavorite ? 'избранном' : 'избранное'}</span>
@@ -60,18 +62,22 @@ export function Film(props: FilmFull) {
 					</div>
 				</div>
 			</div>
-			<div className={style['film__reviews']}>
-				<p>Отзывы</p>
-				<div className={style['film__reviews-grid']}>
-					<div className={style['reviews-item']}>
-						<div className={style['reviews-item__header']}>
-							<h6>{parse(props.short.review.name)}</h6>
-							<span>{props.short.review.dateCreated}</span>
+			{props.short.review ? (
+				<div className={style['film__reviews']}>
+					<p>Отзывы</p>
+					<div className={style['film__reviews-grid']}>
+						<div className={style['reviews-item']}>
+							<div className={style['reviews-item__header']}>
+								<h6>{parse(props.short.review.name)}</h6>
+								<span>{props.short.review.dateCreated}</span>
+							</div>
+							<div className={style['reviews-item__body']}>{parse(props.short.review.reviewBody)}</div>
 						</div>
-						<div className={style['reviews-item__body']}>{parse(props.short.review.reviewBody)}</div>
 					</div>
 				</div>
-			</div>
+			) : (
+				<p>Отзывов нет</p>
+			)}
 		</div>
 	)
 }

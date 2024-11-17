@@ -24,12 +24,12 @@ export interface FilmFull {
 		image: string
 		description: string
 		'@type': string
-		aggregateRating: {
+		aggregateRating?: {
 			ratingValue: number
 		}
 		datePublished: string
 		duration?: string
-		review: {
+		review?: {
 			name: string
 			reviewBody: string
 			dateCreated: string
