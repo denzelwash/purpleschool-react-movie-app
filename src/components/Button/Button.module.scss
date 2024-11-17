@@ -6,12 +6,12 @@
 	cursor: pointer;
 	transition: all 0.3s;
 	&.primary {
-		background-color: #7b6ef6;
-		border-color: #7b6ef6;
-		color: #fff;
+		background-color: var(--primary-color);
+		border-color: var(--primary-color);
+		color: var(--white-color);
 		&:hover {
-			background-color: #5b51b6;
-			border-color: #5b51b6;
+			background-color: var(--primary-color-hover);
+			border-color: var(--primary-color-hover);
 		}
 	}
 }

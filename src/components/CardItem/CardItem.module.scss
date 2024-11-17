@@ -16,7 +16,7 @@
 		padding: 4px 8px;
 		border-radius: 8px;
 		background-color: rgba(0, 0, 0, 0.65);
-		color: #ffad49;
+		color: var(--third-color);
 	}
 	&__poster {
 		border-radius: 10px;
@@ -40,7 +40,7 @@
 		letter-spacing: 0.02em;
 		text-align: left;
 		text-decoration: none;
-		color: #fff;
+		color: var(--white-color);
 		&:hover {
 			text-decoration: underline;
 		}
@@ -52,10 +52,10 @@
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		color: #7b6ef6;
+		color: var(--primary-color);
 		cursor: pointer;
 		&.active {
-			color: #37d8a7;
+			color: var(--secondary-color);
 		}
 	}
 }

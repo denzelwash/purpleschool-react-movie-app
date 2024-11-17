@@ -11,7 +11,7 @@
 		h1 {
 			font-size: 32px;
 			font-weight: 600;
-			color: #ebeef5;
+			color: var(--title-color);
 		}
 	}
 	&__grid {
@@ -39,7 +39,7 @@
 		}
 		p {
 			font-size: 20px;
-			color: #8e95a9;
+			color: var(--text-color);
 		}
 		strong {
 			display: block;
@@ -57,7 +57,7 @@
 		gap: 8px;
 		span {
 			line-height: 16px;
-			color: #ffad49;
+			color: var(--third-color);
 		}
 	}
 	&__favorite-btn {
@@ -66,7 +66,7 @@
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		color: #7b6ef6;
+		color: var(--primary-color);
 		cursor: pointer;
 		&.active {
 			color: #39d4a6;
@@ -100,6 +100,6 @@
 	}
 	&__body {
 		font-size: 20px;
-		color: #8e95a9;
+		color: var(--text-color);
 	}
 }
