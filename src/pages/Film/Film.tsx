@@ -1,8 +1,8 @@
 import { Await, defer, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
-import PageTitle from '../../components/PageTitle/PageTitle'
 import { FilmFull } from '../../types/film'
 import api from '../../services/api'
 import { Suspense } from 'react'
+import { Film as FilmItem } from '../../components/Film/Film'
 
 export default function Film() {
 	const { film } = useLoaderData() as { film: FilmFull }
@@ -12,7 +12,7 @@ export default function Film() {
 			<div className="page-default">
 				<div className="container">
 					<Suspense fallback={<>Skeleton...</>}>
-						<Await resolve={film}>{(film: FilmFull) => <PageTitle>Страница фильма: {film.short.name}</PageTitle>}</Await>
+						<Await resolve={film}>{(film: FilmFull) => <FilmItem {...film}></FilmItem>}</Await>
 					</Suspense>
 				</div>
 			</div>

@@ -21,5 +21,29 @@ export interface Film {
 export interface FilmFull {
 	short: {
 		name: string
+		image: string
+		description: string
+		'@type': string
+		aggregateRating: {
+			ratingValue: number
+		}
+		datePublished: string
+		duration?: string
+		review: {
+			name: string
+			reviewBody: string
+			dateCreated: string
+		}
+	}
+	imdbId: string
+	top: {
+		genres: {
+			genres: [
+				{
+					text: string
+					id: number
+				}
+			]
+		}
 	}
 }

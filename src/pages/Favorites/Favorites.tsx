@@ -17,7 +17,7 @@ export default function Favorites() {
 		<>
 			<div className="page-default">
 				<div className="container">
-					<PageTitle>Страница избранного</PageTitle>
+					<PageTitle className="mb-3">Страница избранного</PageTitle>
 					<CardsGrid>
 						{favoriteFilms.map((film) => (
 							<CardItem
