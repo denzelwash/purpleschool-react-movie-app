@@ -10,8 +10,12 @@ import { Film, FilmsResponse } from '../../types/film'
 import api from '../../services/api'
 import Loader from '../../components/Loader/Loader'
 import { REQUEST_STATUS } from '../../const'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import favoritesSlice, { toggleFilm } from '../../store/slices/favorites'
 
 export default function Main() {
+	const dispatch = useAppDispatch()
+	const favoriteFilms = useAppSelector(favoritesSlice.selectors.films)
 	const [films, setFilms] = useState<Film[]>([])
 	const [status, setStatus] = useState<REQUEST_STATUS>(REQUEST_STATUS.Idle)
 
@@ -39,15 +43,8 @@ export default function Main() {
 		}
 	}
 
-	const handleToggleFavorite = (id: string) => {
-		setFilms([
-			...films.map((film) => {
-				if (film['#IMDB_ID'] === id) {
-					film.isFavorite = !film.isFavorite
-				}
-				return film
-			})
-		])
+	const handleToggleFavorite = (film: Film) => {
+		dispatch(toggleFilm(film))
 	}
 
 	return (
@@ -71,7 +68,12 @@ export default function Main() {
 					{status === REQUEST_STATUS.Success && films.length > 0 && (
 						<CardsGrid>
 							{films.map((film) => (
-								<CardItem {...film} key={film['#IMDB_ID']} toggleFavorite={() => handleToggleFavorite(film['#IMDB_ID'])}></CardItem>
+								<CardItem
+									{...film}
+									key={film['#IMDB_ID']}
+									isFavorite={favoriteFilms.some((f) => f['#IMDB_ID'] === film['#IMDB_ID'])}
+									toggleFavorite={() => handleToggleFavorite(film)}
+								></CardItem>
 							))}
 						</CardsGrid>
 					)}

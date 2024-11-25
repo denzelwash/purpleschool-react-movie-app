@@ -1,30 +1,40 @@
-import { useContext, useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import PageTitle from '../../components/PageTitle/PageTitle'
-import { UserContext } from '../../context/user'
 import style from './Login.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATH } from '../../const'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import userSlice, { setUser } from '../../store/slices/user'
+import { User } from '../../types/user'
+import loadState from '../../utils/loadState'
+import { setFavorites } from '../../store/slices/favorites'
 
 export default function Login() {
-	const { activeUser, login } = useContext(UserContext)
 	const [loginInput, setLoginInput] = useState('')
 	const loginInputRef = useRef<HTMLInputElement>(null)
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const userName = useAppSelector(userSlice.selectors.userName)
 
 	useEffect(() => {
-		if (activeUser) {
+		if (userName) {
 			navigate(ROUTE_PATH.Main)
 		}
-	}, [activeUser, navigate])
+	}, [userName, navigate])
 
 	const handleLogin = () => {
 		if (!loginInput && loginInputRef.current) {
 			loginInputRef.current.focus()
 			return
 		}
-		login(loginInput)
+		const localStorageUsers = loadState<User[]>('users')
+		const user = localStorageUsers?.find((u) => u.name === loginInput)
+		dispatch(setUser(loginInput))
+		if (user?.favorites) {
+			dispatch(setFavorites(user.favorites))
+		}
 		setLoginInput('')
 	}
 

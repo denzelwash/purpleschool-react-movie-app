@@ -1,24 +1,35 @@
 import style from './Menu.module.scss'
 import styleMenuItem from '../MenuItem/MenuItem.module.scss'
 import MenuItem from '../MenuItem/MenuItem'
-import { useContext } from 'react'
-import { UserContext } from '../../context/user'
 import { ROUTE_PATH } from '../../const'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import favoritesSlice, { clearFavorites } from '../../store/slices/favorites'
+import userSlice, { setUser } from '../../store/slices/user'
 
 export default function Menu() {
-	const { activeUser, logout } = useContext(UserContext)
+	const favoriteFilms = useAppSelector(favoritesSlice.selectors.films)
+	const dispatch = useAppDispatch()
+	const userName = useAppSelector(userSlice.selectors.userName)
+
+	const handleLogout = () => {
+		dispatch(setUser(null))
+		dispatch(clearFavorites())
+	}
 
 	return (
 		<nav className={style.menu}>
 			<MenuItem to={ROUTE_PATH.Main}>Поиск фильмов</MenuItem>
 			<MenuItem to={ROUTE_PATH.Favorites}>
 				<span>Мои фильмы</span>
-				<div className={styleMenuItem['menu-item__count']}>2</div>
+				<div className={styleMenuItem['menu-item__count']}>{favoriteFilms.length}</div>
 			</MenuItem>
-			{activeUser ? (
+			{userName ? (
 				<>
-					<MenuItem>{activeUser}</MenuItem>
-					<MenuItem onClick={logout}>Выйти</MenuItem>
+					<MenuItem>
+						<span>{userName}</span>
+						<img src={'/img/icons/user.svg'} width={24} height={24} />
+					</MenuItem>
+					<MenuItem onClick={handleLogout}>Выйти</MenuItem>
 				</>
 			) : (
 				<MenuItem to={ROUTE_PATH.Login}>
